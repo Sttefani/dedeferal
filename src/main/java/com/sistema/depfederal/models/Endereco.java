@@ -1,0 +1,31 @@
+package com.sistema.depfederal.models;
+
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Data
+@Embeddable
+public class Endereco {
+
+    @Column(name = "endereco_cep")
+    private String cep;
+
+    @Column(name = "endereco_logradouro")
+    private String logradouro;
+
+    @Column(name = "endereco_numero")
+    private String numero;
+
+    @Column(name = "endereco_complemento")
+    private String complemento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "endereco_cidade_id")
+    private Cidade cidade;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "endereco_bairro_id")
+    private Bairro bairro;
+
+}
