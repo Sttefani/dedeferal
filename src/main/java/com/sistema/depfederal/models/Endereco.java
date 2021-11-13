@@ -17,15 +17,28 @@ public class Endereco {
     @Column(name = "endereco_numero")
     private String numero;
 
-    @Column(name = "endereco_complemento")
-    private String complemento;
+    public String getCep() {
+        return cep;
+    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "endereco_cidade_id")
-    private Cidade cidade;
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "endereco_bairro_id")
-    private Bairro bairro;
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 
 }

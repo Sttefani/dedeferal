@@ -3,7 +3,8 @@ package com.sistema.depfederal.models;
 public enum GrauParentesco {
 
     CONJUGE("conjuge"),
-    FILHO("filho"),
+    FILHO("filho(a)"),
+    IRMAO("irmão(ã)"),
     OUTRO("outro");
 
     private final String grauParentesco;

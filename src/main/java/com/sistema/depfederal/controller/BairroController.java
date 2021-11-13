@@ -18,16 +18,20 @@ import java.util.List;
 @RequestMapping("/bairros")
 public class BairroController {
 
-    @Autowired
-    private BairroService bairroService;
+    private final BairroService bairroService;
+
+    private final CidadeService cidadeService;
 
     @Autowired
-    private CidadeService cidadeService;
+    public BairroController(BairroService bairroService, CidadeService cidadeService) {
+        this.bairroService = bairroService;
+        this.cidadeService = cidadeService;
+    }
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
         model.addAttribute("bairros", bairroService.buscarTodos());
-        return "/bairro/lista";
+        return "bairro/lista";
     }
 
     @GetMapping("/cadastrar")
@@ -66,7 +70,7 @@ public class BairroController {
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
         bairroService.excluir(id);
-        attr.addFlashAttribute("success", "Cargo excluido com sucesso.");
+        attr.addFlashAttribute("success", "Bairro excluído com sucesso.");
         return "redirect:/bairros/listar";
     }
 

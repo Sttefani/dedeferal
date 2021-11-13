@@ -2,6 +2,8 @@ package com.sistema.depfederal.models;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@Data
 @ToString
 @RequiredArgsConstructor
 public class Eleitor {
@@ -23,32 +26,60 @@ public class Eleitor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message="{validation.nome.eleitor}")
+    @NotBlank(message="O campo nome não pode estar em branco!")
     private String nome;
 
     private String celular;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @NotBlank(message="{validation.dataNascimento.eleitor}")
+    @NotBlank(message="A data de nascimento é obrigatória")
     private LocalDate dataNascimento;
 
     @Enumerated(EnumType.STRING)
-    @NotBlank(message="{validation.sexo.eleitor}")
+    @NotBlank(message="O sexo do eleitor precisa ser definido no campo!")
     private Sexo sexo;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
-    @CPF(message = "{validation.CPF}")
+    @CPF(message = "{CPF inválido!}")
     private String CPF;
 
     private String ocupacao;
 
-    private int numeroIntegrantesFamilia;
-
     @Embedded
     private Endereco endereco;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "endereco_cidade_id")
+    @ToString.Exclude
+    private Cidade cidade;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "endereco_bairro_id")
+    @ToString.Exclude
+    private Bairro bairro;
+
+    @NotBlank(message="O número de integrantes da família precisa ser definido!!")
+    private int numeroIntegrantesFamilia;
+
+    private String localdeVotacao;
+
+    private String tituloDeEleitor;
+
+    private String zona;
+
+    private String secao;
+
+
+    @CreationTimestamp
+    @Column(columnDefinition = "datetime")
+    private LocalDateTime dataCriacao;
+
+    @UpdateTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    private LocalDateTime dataAtualizacao;
 
     @OneToMany(mappedBy = "eleitor")
     @ToString.Exclude
@@ -63,14 +94,14 @@ public class Eleitor {
 
     @OneToMany(mappedBy = "eleitor")
     @ToString.Exclude
-    private List<Parentesco> parentesco;
+    private List<Parente> parente;
 
-    public List<Parentesco> getParentesco() {
-        return parentesco;
+    public List<Parente> getParente() {
+        return parente;
     }
 
-    public void setParentesco(List<Parentesco> parentesco) {
-        this.parentesco = parentesco;
+    public void setParente(List<Parente> parente) {
+        this.parente = parente;
     }
 
 

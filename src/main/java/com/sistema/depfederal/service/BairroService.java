@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class BairroService {
 
+    private final BairroRepository bairroRepository;
+
     @Autowired
-    private BairroRepository bairroRepository;
+    public BairroService(BairroRepository bairroRepository) {
+        this.bairroRepository = bairroRepository;
+    }
 
     public List<Bairro> buscarTodos() {
         return bairroRepository.findAll();

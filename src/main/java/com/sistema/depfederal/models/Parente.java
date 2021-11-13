@@ -15,7 +15,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Parentesco {
+public class Parente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class Parentesco {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Parentesco that = (Parentesco) o;
+        Parente that = (Parente) o;
         return id != null && Objects.equals(id, that.id);
     }
 

@@ -2,11 +2,13 @@ package com.sistema.depfederal.models;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -20,14 +22,21 @@ public class Bairro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "{bairro.validation.nome}")
-    private String nome;   //fazer metodo para verificação se aquele bairro já não está cadstrado nessa cidade
+    @NotBlank(message = "O nome do bairro precisa ser preenchido!")
+    private String nome;
 
-    @NotNull(message = "{bairro.validation.cidade}")
+    @NotNull(message = "A cidade precisa ser selecionada!")
     @ManyToOne
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
 
+    @CreationTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    private LocalDateTime dataCadastro;
+
+    @UpdateTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    private LocalDateTime dataAtualizacao;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

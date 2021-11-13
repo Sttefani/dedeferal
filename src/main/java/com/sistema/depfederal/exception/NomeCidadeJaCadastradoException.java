@@ -1,7 +1,8 @@
 package com.sistema.depfederal.exception;
 
-class NomeCidadeJaCadastradoException extends RuntimeException {
-    public NomeCidadeJaCadastradoExceptionn(String message) {
+public class NomeCidadeJaCadastradoException extends RuntimeException {
+
+    public NomeCidadeJaCadastradoException(String message) {
         super(message);
     }
 }

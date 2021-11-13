@@ -2,9 +2,12 @@ package com.sistema.depfederal.models;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,8 +22,7 @@ public class Cidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message="{validation.nome.cidade}")
-    @Column(unique = true,  length = 50)
+    @NotBlank(message="O nome da cidade precisa ser preenchido!")
     private String nome;
 
     @OneToMany(mappedBy = "cidade")
@@ -33,6 +35,14 @@ public class Cidade {
     public void setBairro(List<Bairro> bairro) {
         this.bairro = bairro;
     }
+
+    @CreationTimestamp
+    @Column(columnDefinition = "datetime")
+    private LocalDateTime dataCadastro;
+
+    @UpdateTimestamp
+    @Column(nullable = false, columnDefinition = "datetime")
+    private LocalDateTime dataAtualizacao;
 
     @Override
     public boolean equals(Object o) {

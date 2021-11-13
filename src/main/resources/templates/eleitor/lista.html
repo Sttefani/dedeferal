@@ -11,13 +11,13 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <i class="oi oi-caret-right"></i>
-          <span>Lista de Bairros</span>
+          <span>Lista de Eleitores</span>
         </li>
       </ul>
     </div>
-    <a class="btn btn-primary btn-md" th:href="@{/bairros/cadastrar}" role="button">
+    <a class="btn btn-primary btn-md" th:href="@{/eleitores/cadastrar}" role="button">
       <span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
-      <span>Novo Bairro</span>
+      <span>Novo Cadastro de Eleitor</span>
     </a>
   </nav>
 
@@ -31,20 +31,23 @@
         <tr>
           <th>#</th>
           <th>Nome</th>
-          <th>Cidade</th>
-          <th>Ação</th>
+          <th>Celular</th>
+          <th>Nascimento</th>
+          <th>Sexo</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="b : ${bairros}">
-          <td th:text=${b.id}>Cód do bairro</td>
-          <td th:text=${b.nome}>Nome do bairro</td>
-          <td th:text=${b.cidade.nome}>Nome da cidade</td>
+        <tr th:each="e : ${eleitores}">
+          <td th:text=${e.eleitor}>Código do Eleitor</td>
+          <td th:text=${e.nome}>Nome Completo</td>
+          <td th:text=${e.celular}>Celular com DDD</td>
+          <td th:text=${e.dataNascimento}>Data de Nascimento</td>
+          <td th:text=${e.sexo}>Sexo</td>
           <td colspan="2">
-            <a class="btn btn-info btn-sm" th:href="@{/bairros/editar/{id} (id=${b.id}) }" role="button">
+            <a class="btn btn-info btn-sm" th:href="@{/eleitores/editar/{id} (id=${e.id}) }" role="button">
               <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
             </a>
-            <button th:id="${#strings.concat('btn_bairros/excluir/', b.id) }"
+            <button th:id="${#strings.concat('btn_eleitores/excluir/', e.id) }"
                     data-toggle="modal" data-target="#myModal"
                     type="button" class="btn btn-danger btn-sm">
               <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
