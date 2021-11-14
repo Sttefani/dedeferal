@@ -24,22 +24,27 @@
 
     <div th:replace="fragments/alert"></div>
 
-    <form th:action="${bairro.id == null} ? @{/bairros/salvar} : @{/bairros/editar}" th:object="${bairro}" method="POST">
-
-      <div th:replace="fragments/validacao :: validacao"></div>
-
+    <form th:action="${bairro.id == null} ? @{/bairros/salvar} : @{/bairros/editar}" th:object="${bairro}"
+          method="POST">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="nome">Nome</label>
           <input type="text" class="form-control" id="nome" placeholder="Nome do bairro" autofocus="autofocus"
-                 th:field="*{nome}"/>
+                 th:field="*{nome}" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid'"/>
+          <div class="invalid-feedback">
+            <span th:errors="*{nome}"></span>
+          </div>
         </div>
         <div class="form-group col-md-4">
           <label for="cidade">Cidade</label>
-          <select id="cidade" class="form-control" th:field="*{cidade}">
+          <select id="cidade" class="form-control" th:field="*{cidade}"
+                  th:classappend="${#fields.hasErrors('cidade')} ? 'is-invalid'">
             <option value="">Selecione</option>
             <option th:each="c : ${cidades}" th:value="${c.id}" th:text=${c.nome}>---</option>
           </select>
+          <div class="invalid-feedback">
+            <span th:errors="*{cidade}"></span>
+          </div>
         </div>
       </div>
       <input type="hidden" id="id" th:field="*{id}" value=""/>
