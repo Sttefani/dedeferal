@@ -1,6 +1,5 @@
 package com.sistema.depfederal.controller;
 
-import com.sistema.depfederal.exception.NomeBairroJaCadastradoException;
 import com.sistema.depfederal.models.Bairro;
 import com.sistema.depfederal.models.Cidade;
 import com.sistema.depfederal.service.BairroService;
@@ -19,11 +18,15 @@ import java.util.List;
 @RequestMapping("/bairros")
 public class BairroController {
 
-    @Autowired
-    private BairroService bairroService;
+    private final BairroService bairroService;
+
+    private final CidadeService cidadeService;
 
     @Autowired
-    private CidadeService cidadeService;
+    public BairroController(BairroService bairroService, CidadeService cidadeService) {
+        this.bairroService = bairroService;
+        this.cidadeService = cidadeService;
+    }
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
@@ -37,19 +40,14 @@ public class BairroController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@Valid Bairro bairro, BindingResult result, RedirectAttributes attr, ModelMap model) {
-        try {
-            if (result.hasErrors()) {
-                return "bairro/cadastro";
-            }
-            bairroService.salvar(bairro);
-            attr.addFlashAttribute("success", "Bairro inserido com sucesso.");
-            return "redirect:/bairros/listar";
-        } catch (NomeBairroJaCadastradoException e) {
-            e.printStackTrace();
-            model.addAttribute("fail", e.getMessage());
+    public String salvar(@Valid Bairro bairro, BindingResult result, RedirectAttributes attr) {
+        if (result.hasErrors()) {
             return "bairro/cadastro";
         }
+
+        bairroService.salvar(bairro);
+        attr.addFlashAttribute("success", "Bairro inserido com sucesso.");
+        return "redirect:/bairros/listar";
     }
 
     @GetMapping("/editar/{id}")

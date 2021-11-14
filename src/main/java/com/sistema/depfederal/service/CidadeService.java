@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class CidadeService {
 
+    private final CidadeRepository cidadeRepository;
+
     @Autowired
-    private CidadeRepository cidadeRepository;
+    public CidadeService(CidadeRepository cidadeRepository) {
+        this.cidadeRepository = cidadeRepository;
+    }
 
     public List<Cidade> buscarTodos() {
         return cidadeRepository.findAll();
