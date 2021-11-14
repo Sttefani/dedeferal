@@ -17,7 +17,6 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@Data
 @ToString
 @RequiredArgsConstructor
 public class Eleitor {
